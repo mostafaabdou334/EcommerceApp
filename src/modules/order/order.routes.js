@@ -5,7 +5,7 @@ import { isAuth } from "../../middleware/auth.js";
 import { orderRoles } from "./order.roles.js";
 import { validationCoreFunction } from "../../middleware/validation.js";
 import { cancelOrderSchema, fromCartOrderSchema } from "./order.validationSchema.js";
-import express from 'express'
+import express from 'express';
 
 
 
