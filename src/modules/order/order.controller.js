@@ -789,7 +789,7 @@ export const webhook = async (req, res, next) => {
   console.log(orderId)
   const order = await orderModel.findById(orderId)
   // Handle the event
-  // if (event.type === "checkout.session.completed") {
+  if (event.type === "checkout.session.completed"||"checkout.session.async_payment_succeeded") {
 
     const orderId = event.data.object.metadata.order_id
     const order = await orderModel.findById(orderId)
@@ -866,7 +866,7 @@ export const webhook = async (req, res, next) => {
     await order.save()
     return res.status(200).json({ message: 'done', order })
 
-  
+  }
 
   // else {
 
