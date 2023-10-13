@@ -786,6 +786,7 @@ export const webhook = async (req, res, next) => {
   }
 
   const orderId = event.data.object.metadata.order_id
+  console.log(orderId)
   const order = await orderModel.findById(orderId)
   // Handle the event
   if (event.type === "checkout.session.completed") {
