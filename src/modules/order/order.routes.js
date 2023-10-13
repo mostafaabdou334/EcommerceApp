@@ -19,7 +19,7 @@ router.post('/webhook', express.raw({ type: 'application/json' }), errorHandler(
 
 router.patch('/cancelOrder', isAuth(orderRoles.createOrder), validationCoreFunction(cancelOrderSchema), errorHandler(orderController.cancelOrder))
 
-// router.get('/successOrder' ,errorHandler(orderController.successPayment))  
+router.get('/successOrder' ,errorHandler(orderController.successPayment))  
 router.get('/cancelOrderr', errorHandler(orderController.cancelPayment))
 
 // router.post('/createOrder',isAuth(orderRoles.createOrder) ,errorHandler(orderController.createOrder)) 
