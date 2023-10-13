@@ -82,7 +82,14 @@ export const initiateApp = (app, express) => {
     ////////////////////////////////////////////////
 
     
-    app.use(express.json())
+    // app.use(express.json())
+    app.use((req,res,next)=>{
+        if(req.originalUrl === '/orders/webhook'){
+            return next()
+        }
+        express.json()(req,res,next)
+    })
+
     databaseConnection()
 
     app.use('/auth', allRouters.authRoutes)
