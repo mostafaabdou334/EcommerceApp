@@ -686,7 +686,7 @@ export const fromCartOrderCard = async (req, res, next) => {
     address,
     phoneNumbers,
     orderStatus:"pending",
-    paymentMethod:"card",
+    paymentMethod,
     subTotal,
     paidAmount,
     couponId: req.coupon?._id,
