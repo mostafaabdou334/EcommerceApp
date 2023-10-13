@@ -13,10 +13,11 @@ const router = Router()
 
 router.post('/fromCartOrderCash',isAuth(orderRoles.createOrder),validationCoreFunction(fromCartOrderSchema) ,errorHandler(orderController.fromCartOrderCash))  
 router.post('/fromCartOrderCard',isAuth(orderRoles.createOrder),validationCoreFunction(fromCartOrderSchema) ,errorHandler(orderController.fromCartOrderCard))  
+router.post('/webhook', express.raw({ type: 'application/json' }),errorHandler(orderController.webhook))
 
 router.patch('/cancelOrder',isAuth(orderRoles.createOrder),validationCoreFunction(cancelOrderSchema) ,errorHandler(orderController.cancelOrder))  
   
-router.get('/successOrder' ,errorHandler(orderController.successPayment))  
+// router.get('/successOrder' ,errorHandler(orderController.successPayment))  
 router.get('/cancelOrderr' ,errorHandler(orderController.cancelPayment))
  
 // router.post('/createOrder',isAuth(orderRoles.createOrder) ,errorHandler(orderController.createOrder)) 
