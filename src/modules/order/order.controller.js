@@ -879,7 +879,7 @@ export const successPayment = async (req, res, next) => {
   const decodeData = verifyToken({ token, signature: process.env.ORDER_TOKEN })
   const order = await orderModel.findOne({
     _id: decodeData.orderId,
-    orderStatus: 'pending',
+    // orderStatus: 'pending',
   })
   if (!order) {
     return next(new AppError('invalid order id', 400))
