@@ -735,7 +735,7 @@ export const fromCartOrderCard = async (req, res, next) => {
     orderSession = await paymentFunction({
       payment_method_types: ['card'],
       mode: 'payment',
-      metadata: { order_id: orderDB._id.toString() },
+      metadata: { order_id: orderDB._id },
       customer_email: req.authUser.email,
       metadata: { orderId: orderDB._id.toString() },
       success_url: `${req.protocol}://${req.headers.host}/orders/successOrder?token=${token}`,
@@ -774,7 +774,7 @@ export const webhook = async (request,response) => {
   const endpointSecret = process.env.STRIP_ENDPOIT_SECRET;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY) // to estaplish connection
 
-  const sig = request.headers['whsec_T5lvgLktxdVv8iA6aEvF8mYsB5nN6IUr'];
+  const sig = request.headers['stripe-signature'];
 
   let event;
 
