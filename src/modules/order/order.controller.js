@@ -679,19 +679,14 @@ export const fromCartOrderCard = async (req, res, next) => {
     paidAmount = subTotal
   }
 
-  // paymentMethod and orderStatus ......
-  let orderStatus
-  paymentMethod == 'cash' ? (orderStatus = 'placed') : (orderStatus = 'pending')
-
-
   // make order object to create order ....
   const orderObject = {
     userId: _id,
     products: orderProduct,
     address,
     phoneNumbers,
-    orderStatus,
-    paymentMethod,
+    orderStatus:"pending",
+    paymentMethod:"card",
     subTotal,
     paidAmount,
     couponId: req.coupon?._id,
