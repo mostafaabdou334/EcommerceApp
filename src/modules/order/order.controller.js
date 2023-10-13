@@ -769,19 +769,19 @@ export const fromCartOrderCard = async (req, res, next) => {
 
 // webHook...
 
-export const webhook = async (req, res, next) => {
+export const webhook = async (request,response) => {
 
   const endpointSecret = process.env.STRIP_ENDPOIT_SECRET;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY) // to estaplish connection
 
-  const sig = req.headers['stripe-signature'];
+  const sig = request.headers['stripe-signature'];
 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
-    res.status(400).send(`Webhook Error: ${err.message}`);
+    response.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
 
@@ -794,7 +794,10 @@ export const webhook = async (req, res, next) => {
     const orderId = event.data.object.metadata.order_id
     const order = await orderModel.findById(orderId)
 
+
     order.orderStatus = 'confirmed';
+    await order.save()
+
 
     // 2-1 increase usageCount for coupon usage
     // if (order.couponId) {
