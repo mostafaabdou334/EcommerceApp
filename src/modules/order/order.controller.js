@@ -774,14 +774,14 @@ export const webhook = async (req, res, next) => {
   const endpointSecret = process.env.STRIP_ENDPOIT_SECRET;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY) // to estaplish connection
 
-  const sig = request.headers['stripe-signature'];
+  const sig = req.headers['stripe-signature'];
 
   let event;
 
   try {
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
 
