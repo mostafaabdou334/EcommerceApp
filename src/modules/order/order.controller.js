@@ -785,19 +785,11 @@ export const webhook = async (request,response) => {
   }
 
   const orderId = event.data.object.metadata.order_id
-  console.log(orderId)
   const order = await orderModel.findById(orderId)
   // Handle the event
   if (event.type === "checkout.session.completed"||event.type ==="checkout.session.async_payment_succeeded") {
 
-    const orderId = event.data.object.metadata.order_id
-    const order = await orderModel.findById(orderId)
-
-
     order.orderStatus = 'confirmed';
-    await order.save()
-
-
     // 2-1 increase usageCount for coupon usage
     if (order.couponId) {
       const coupon = await couponModel.findById(order.couponId)
@@ -823,7 +815,7 @@ export const webhook = async (request,response) => {
     }
 
     // 2-3 we should clear cart it self ...
-    // const cart = await cartModel.findOneAndUpdate({ createdBy: order.userId }, { products: [], subTotal: 0 })
+    const cart = await cartModel.findOneAndUpdate({ createdBy: order.userId }, { products: [], subTotal: 0 })
 
     // 2-4 send invoice to make pdf file  ......
     // const orderCode = `${decodeData.user.userName}_${nanoid(3)}`
