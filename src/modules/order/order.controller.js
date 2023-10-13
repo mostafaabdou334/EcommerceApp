@@ -797,34 +797,34 @@ export const webhook = async (req, res, next) => {
     order.orderStatus = 'confirmed';
 
     // 2-1 increase usageCount for coupon usage
-    if (order.couponId) {
-      const coupon = await couponModel.findById(order.couponId)
-      for (const user of coupon.couponAssignedToUser) {
-        if (user.userId.toString() == order.userId.toString()) {
-          user.usageCount += 1
-        }
-      }
-      await coupon.save()
-    }
+    // if (order.couponId) {
+    //   const coupon = await couponModel.findById(order.couponId)
+    //   for (const user of coupon.couponAssignedToUser) {
+    //     if (user.userId.toString() == order.userId.toString()) {
+    //       user.usageCount += 1
+    //     }
+    //   }
+    //   await coupon.save()
+    // }
 
     // 2-2 decrease product's stock by order's product quantity in product model
-    for (const product of order.products) {
-      await productModel.findOneAndUpdate(
-        { _id: product.productId },
-        {
-          $inc: {
-            stock: -parseInt(product.quantity),
-            soldItems: parseInt(product.quantity)
-          },
-        },
-      )
-    }
+    // for (const product of order.products) {
+    //   await productModel.findOneAndUpdate(
+    //     { _id: product.productId },
+    //     {
+    //       $inc: {
+    //         stock: -parseInt(product.quantity),
+    //         soldItems: parseInt(product.quantity)
+    //       },
+    //     },
+    //   )
+    // }
 
     // 2-3 we should clear cart it self ...
-    const cart = await cartModel.findOneAndUpdate({ createdBy: order.userId }, { products: [], subTotal: 0 })
+    // const cart = await cartModel.findOneAndUpdate({ createdBy: order.userId }, { products: [], subTotal: 0 })
 
     // 2-4 send invoice to make pdf file  ......
-    const orderCode = `${decodeData.user.userName}_${nanoid(3)}`
+    // const orderCode = `${decodeData.user.userName}_${nanoid(3)}`
     // generat invoice object
     // const orderinvoice = {
     //   shipping: {
@@ -864,7 +864,7 @@ export const webhook = async (req, res, next) => {
 
     ////////////////
     await order.save()
-    return res.status(200).json({ message: 'done', order })
+    return;
 
   }
 
