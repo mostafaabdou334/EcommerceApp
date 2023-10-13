@@ -774,7 +774,7 @@ export const webhook = async (request,response) => {
   const endpointSecret = process.env.STRIP_ENDPOIT_SECRET;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY) // to estaplish connection
 
-  const sig = request.headers['stripe-signature'];
+  const sig = request.headers['whsec_T5lvgLktxdVv8iA6aEvF8mYsB5nN6IUr'];
 
   let event;
 
