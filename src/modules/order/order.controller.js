@@ -735,9 +735,8 @@ export const fromCartOrderCard = async (req, res, next) => {
     orderSession = await paymentFunction({
       payment_method_types: ['card'],
       mode: 'payment',
-      metadata: { order_id: orderDB._id },
+      metadata: { order_id: orderDB._id.toString() },
       customer_email: req.authUser.email,
-      metadata: { orderId: orderDB._id.toString() },
       success_url: `${req.protocol}://${req.headers.host}/orders/successOrder?token=${token}`,
       cancel_url: `${req.protocol}://${req.headers.host}/orders/cancelOrderr?token=${token}`,
       line_items: orderDB.products.map((product) => {
