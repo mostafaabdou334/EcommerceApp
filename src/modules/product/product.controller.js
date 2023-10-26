@@ -100,6 +100,8 @@ export const addProduct = async (req, res, next) => {
     }
 
     const product = await productModel.create(productObject)
+    req.failedDocument = { model: productModel, _id: product._id }
+
     if (!product) {
 
         const resultData = await cloudinary.api.delete_resources(coverImagesPublic_ids)
@@ -192,9 +194,18 @@ export const updateProduct = async (req, res, next) => {
     if (req.files?.length) {
 
         let coverImages = []
+        let coverImagesPublic_ids = []
+
+
+        // get old images from database
+        for (const image of checkProduct.image) {
+            coverImagesPublic_ids.push(image.public_id)
+        }
+
         // delete old images from cloudinary ...
-        await cloudinary.api.delete_resources_by_prefix(`${checkProduct.cloudFolder}`)  // to delete all photos inside every folder in this path and give it the path of this folders
-        // here we can use cloudinary.api.delete_resources_by_prefix(`${checkProduct.cloudFolder}`) => as i do not have any folder after this folder
+        const resultData = await cloudinary.api.delete_resources(coverImagesPublic_ids)
+        // await cloudinary.api.delete_resources_by_prefix(`${checkProduct.cloudFolder}`)  // to delete all photos inside every folder in this path and give it the path of this folders
+        // await cloudinary.api.delete_folder(`${checkProduct.cloudFolder}`)  // now i can delete this folder after deleting every photos inside it
 
         // upload image to cloudinary .
         for (const file of req.files) {

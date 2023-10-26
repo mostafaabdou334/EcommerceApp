@@ -64,6 +64,8 @@ export const addCoupon = async (req, res, next) => {
     }
 
     const coupon = await couponModel.create(couponObject)
+    req.failedDocument = { model: couponModel, _id: coupon._id }
+
     if (!coupon) {
         return next(new AppError("fail to add coupon...", 409))
 

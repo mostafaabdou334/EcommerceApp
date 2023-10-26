@@ -58,6 +58,8 @@ export const createSubCategory = async (req, res, next) => {
     }
 
     const subCategory = await subCategoryModel.create(subCategoryObject)
+    req.failedDocument = { model: subCategoryModel, _id: subCategory._id }
+
     if (!subCategory) {
 
         const resultData = await cloudinary.uploader.destroy(public_id)

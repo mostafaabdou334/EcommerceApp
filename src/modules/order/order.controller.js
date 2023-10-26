@@ -509,6 +509,8 @@ export const fromCartOrderCash = async (req, res, next) => {
 
   // create order ....
   const orderDB = await orderModel.create(orderObject)
+  req.failedDocument = { model: orderModel, _id: orderDB._id }
+
 
   if (orderDB) {
 
@@ -694,6 +696,8 @@ export const fromCartOrderCard = async (req, res, next) => {
 
   // create order ....
   const orderDB = await orderModel.create(orderObject)
+  req.failedDocument = { model: orderModel, _id: orderDB._id }
+
 
   if (orderDB) {
 

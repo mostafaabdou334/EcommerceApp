@@ -47,6 +47,14 @@ export const createCategory = async (req, res, next) => {
     }
 
     const category = await categoryModel.create(categoryObject)
+    req.failedDocument = { model: categoryModel, _id: category._id }
+
+    // to test catch error
+    // const x = 9;
+    // x = 8;
+    // if there is error after creating in this model so i should to delete this model from database
+    // this error will cath in errorHandling.
+
     if (!category) {
 
         const resultData = await cloudinary.uploader.destroy(public_id)

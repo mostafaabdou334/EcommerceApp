@@ -70,6 +70,8 @@ export const addToCart = async (req, res, next) => {
     }
 
     const userCart = await cartModel.create(cartObject)
+    req.failedDocument = { model: cartModel, _id: userCart._id }
+
     return res.status(200).json({ message: 'success', userCart })
 
 }

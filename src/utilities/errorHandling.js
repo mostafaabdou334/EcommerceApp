@@ -13,6 +13,12 @@ export const errorHandler = (API) => {
                 await cloudinary.api.delete_folder(req.imagePath)  // now i can delete this folder after deleting every photos inside it
 
             }
+
+            // here if there is error done after creating model in database.
+            if(req.failedDocument){
+                const {model,_id} = req.failedDocument
+                await model.findByIdAndDelete(_id)
+            }
             
             next(err)  // by this way i sent err to globalErrorHandler to union response
         })

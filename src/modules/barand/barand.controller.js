@@ -68,6 +68,8 @@ export const createBrand = async (req, res, next) => {
 
 
     const brand = await brandModel.create(brandObject)
+    req.failedDocument = { model: brandModel, _id: brand._id }
+
     if (!brand) {
 
         const resultData = await cloudinary.uploader.destroy(public_id)

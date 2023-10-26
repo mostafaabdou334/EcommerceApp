@@ -30,6 +30,8 @@ export const createReview = async (req, res, next) => {
         reviewRate,
       }
       const reviewDB = await reviewModel.create(reviewObject)
+      req.failedDocument = { model: reviewModel, _id: reviewDB._id }
+
       if (!reviewDB) {
         return next(new Error('fail to add review', { cause: 500 }))
       }
